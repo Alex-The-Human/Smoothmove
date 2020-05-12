@@ -2,11 +2,13 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 let mouse = {
 	x: null,
 	y: null,
-	radius: (canvas.height/80) * (canvas.width/80)
+	radius: (canvas.height/110) * (canvas.width/110)
 }
 
 window.addEventListener('mousemove',
@@ -28,7 +30,7 @@ class Particle {
 	draw() {
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-		ctx.fillStyle = "#222222";
+		ctx.fillStyle = "F0F0F0";
 		ctx.fill();
 	}
 	update() {
@@ -95,6 +97,8 @@ window.addEventListener('resize',
 		canvas.width = innerWidth
 		canvas.height = innerHeight
 		mouse.radius = ((canvas.height/80) *(canvas.height/80));
+		ctx.fillStyle = "black";
+		ctx.fillRect(0, 0, canvas.width, canvas.height)
 		init();
 	})
 
