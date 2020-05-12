@@ -148,6 +148,7 @@ window.addEventListener('resize',
 	function(){
 		canvas.width = innerWidth
 		canvas.height = innerHeight
+		pSize = canvas.height/60;
 	})
 document.addEventListener("keydown", (ev) => { return onkey(ev, true); }, false);
 document.addEventListener("keyup", (ev) => { return onkey(ev, false); }, false);

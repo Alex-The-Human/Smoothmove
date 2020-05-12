@@ -28,7 +28,7 @@ class Particle {
 	draw() {
 		ctx.beginPath();
 		ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-		ctx.fillStyle = "#EEEEEE";
+		ctx.fillStyle = "#222222";
 		ctx.fill();
 	}
 	update() {
