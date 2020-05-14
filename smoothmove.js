@@ -10,7 +10,7 @@ let pXvel = 0;
 let pYvel = 0;
 let friction = 1.045;
 let maxVel = 100;
-let pSize = canvas.height/60;
+let pSize = canvas.height/120;
 let keys = {
 	w: false,
 	a: false,
@@ -117,23 +117,62 @@ function loop() {
 	
 	
 	// Set Screen color
-    ctx.fillStyle = "black";
+    ctx.fillStyle = '#010101';
     // Fill Screen
 	ctx.fillRect(0, 0, canvas.width, canvas.height)
 	// Particles trail
 	ctx.fillStyle = "#cc8888";
-	ctx.fillRect(delayedX1+(pSize*0.1), delayedY1+(pSize*0.1), pSize*0.8, pSize*0.8);
-	ctx.fillStyle = "#996666";
-	ctx.fillRect(delayedX2+(pSize*0.2), delayedY2+(pSize*0.2), pSize*0.6, pSize*0.6);
-	ctx.fillStyle = "#664444";
-	ctx.fillRect(delayedX3+(pSize*0.3), delayedY3+(pSize*0.3), pSize*0.4, pSize*0.4);
-	ctx.fillStyle = "#332222";
-	ctx.fillRect(delayedX4+(pSize*0.4), delayedY4+(pSize*0.4), pSize*0.2, pSize*0.2);
+	
+	//ctx.fillRect(delayedX1+(pSize*0.1), delayedY1+(pSize*0.1), pSize*0.8, pSize*0.8);
+	//ctx.fillStyle = "#996666";
+	//ctx.fillRect(delayedX2+(pSize*0.2), delayedY2+(pSize*0.2), pSize*0.6, pSize*0.6);
+	//ctx.fillStyle = "#664444";
+	//ctx.fillRect(delayedX3+(pSize*0.3), delayedY3+(pSize*0.3), pSize*0.4, pSize*0.4);
+	//ctx.fillStyle = "#332222";
+	//ctx.fillRect(delayedX4+(pSize*0.4), delayedY4+(pSize*0.4), pSize*0.2, pSize*0.2);
 	
     // Set Player color
-    ctx.fillStyle = "#FFAAAA";
-    // Draw Player
-    ctx.fillRect(playerX, playerY, pSize, pSize);
+    //ctx.fillStyle = "#FFAAAA";
+    // Draw Player    
+	
+	//ctx.fillRect(playerX, playerY, pSize, pSize);
+	
+	//Circles
+	ctx.beginPath();
+	ctx.fillStyle = "#332222";
+	ctx.arc(delayedX4, delayedY4, pSize*0.2, 0, 2 * Math.PI, false);
+	ctx.fill();
+	ctx.strokeStyle = '#332222';
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.fillStyle = "#664444";
+	ctx.arc(delayedX3, delayedY3, pSize*0.4, 0, 2 * Math.PI, false);
+	ctx.fill();
+	ctx.strokeStyle = '#664444';
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.fillStyle = "#996666";
+	ctx.arc(delayedX2, delayedY2, pSize*0.6, 0, 2 * Math.PI, false);
+	ctx.fill();
+	ctx.strokeStyle = '#996666';
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.fillStyle = "#cc8888";
+	ctx.arc(delayedX1, delayedY1, pSize*0.8, 0, 2 * Math.PI, false);
+	ctx.fill();
+	ctx.strokeStyle = '#cc8888';
+	ctx.stroke();
+	
+	ctx.beginPath();
+	ctx.fillStyle = "#FFAAAA";
+	ctx.arc(playerX, playerY, pSize, 0, 2 * Math.PI, false);
+	ctx.fill();
+	ctx.strokeStyle = '#FFAAAA';
+	ctx.stroke();
+	
 	setTimeout(loop, 1000/60)
 	
 }
@@ -150,6 +189,12 @@ window.addEventListener('resize',
 		canvas.height = innerHeight
 		pSize = canvas.height/60;
 	})
+	
+window.addEventListener('mousemove', function (event) {
+	var mouseX = event.clientX;
+	var mouseY = event.clientY;
+});
+	
 document.addEventListener("keydown", (ev) => { return onkey(ev, true); }, false);
 document.addEventListener("keyup", (ev) => { return onkey(ev, false); }, false);
 
