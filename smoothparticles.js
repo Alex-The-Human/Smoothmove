@@ -8,8 +8,8 @@ let playerX = 0;
 let playerY = 0;
 let pXvel = 0;
 let pYvel = 0;
-let friction = 1.045;
-let maxVel = 100;
+let friction = 1.04;
+let maxVel = 500;
 let pSize = canvas.height/60;
 let keys = {
 	w: false,
@@ -127,7 +127,7 @@ function move() {
 function loop() {
 
 	move();
-	
+	init();
 // MOVEMENT SCRIPT
 	delayedX4 = delayedX3;
 	delayedY4 = delayedY3;
@@ -183,27 +183,21 @@ function loop() {
     ctx.fillStyle = "black";
     // Fill Screen
 	ctx.fillRect(0, 0, canvas.width, canvas.height)
-	// Particles
-	requestAnimationFrame(loop);
-	for (let i = 0; i < particlesArray.length; i++) {
-		particlesArray[i].update();
-	}
 	// Particles trail
-	ctx.fillStyle = "#cc8888";
-	ctx.fillRect(delayedX1+(pSize*0.1), delayedY1+(pSize*0.1), pSize*0.8, pSize*0.8);
-	ctx.fillStyle = "#996666";
-	ctx.fillRect(delayedX2+(pSize*0.2), delayedY2+(pSize*0.2), pSize*0.6, pSize*0.6);
-	ctx.fillStyle = "#664444";
-	ctx.fillRect(delayedX3+(pSize*0.3), delayedY3+(pSize*0.3), pSize*0.4, pSize*0.4);
 	ctx.fillStyle = "#332222";
 	ctx.fillRect(delayedX4+(pSize*0.4), delayedY4+(pSize*0.4), pSize*0.2, pSize*0.2);
+	ctx.fillStyle = "#664444";
+	ctx.fillRect(delayedX3+(pSize*0.3), delayedY3+(pSize*0.3), pSize*0.4, pSize*0.4);
+	ctx.fillStyle = "#996666";
+	ctx.fillRect(delayedX2+(pSize*0.2), delayedY2+(pSize*0.2), pSize*0.6, pSize*0.6);
+	ctx.fillStyle = "#cc8888";
+	ctx.fillRect(delayedX1+(pSize*0.1), delayedY1+(pSize*0.1), pSize*0.8, pSize*0.8);
 	
     // Set Player color
     ctx.fillStyle = "#FFAAAA";
     // Draw Player
     ctx.fillRect(playerX, playerY, pSize, pSize);
 	setTimeout(loop, 1000/60)
-	
 }
 
 // Disable Scroll Bar
@@ -227,6 +221,15 @@ function init() {
 	}
 }
 
+function animate() {
+	requestAnimationFrame(animate);
+	ctx.clearRect(0,0,innerWidth, innerHeight);
+	
+	for (let i = 0; i < particlesArray.length; i++) {
+		particlesArray[i].update();
+	}
+}
+
 window.addEventListener('resize',
 	function(){
 		canvas.width = innerWidth
@@ -238,4 +241,5 @@ document.addEventListener("keyup", (ev) => { return onkey(ev, false); }, false);
 
 disableScroll();
 init();
+animate();
 loop();
