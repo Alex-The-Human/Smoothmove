@@ -8,7 +8,7 @@ let playerX = 0;
 let playerY = 0;
 let pXvel = 0;
 let pYvel = 0;
-let friction = 1.00;
+let friction = 1.045;
 let maxVel = canvas.width/100;
 let pScale = 10
 let pSize = canvas.height/pScale;
@@ -28,9 +28,22 @@ let delayedY3 = 0;
 let delayedX4 = 0;
 let delayedY4 = 0;
 
+//player sprite
 var playerSprite = new Image; 
 playerSprite.src = "purpleTankturretScaled.png";
-var imageDim = 960;
+var spriteDim = 384;
+
+//tile texture
+var tile = new Image; 
+tile.src = "background.Scaled.png";
+var tileDim = 256;
+var tileSize = canvas.height/10;
+
+var ui = new Image;
+ui.src = "ui.png";
+
+var noise = new Image;
+noise.src = "noise.png";
 
 function onkey(e, pressed){
 	
@@ -102,30 +115,41 @@ function loop() {
 	playerY = playerY + pYvel;
 	
 	// border collisions
-	if(playerX<=0) {
-		playerX = 0;
+	if(playerX<=-pSize*0.29) {
+		playerX = -pSize*0.29;
 		pXvel = -pXvel/1.2
 	}
-	if(playerY<=0) {
-		playerY = 0;
+	if(playerY<=-pSize*0.3) {
+		playerY = -pSize*0.29;
 		pYvel = -pYvel/1.2
 	}
-	if(playerX>=canvas.width-pSize) {
-		playerX = canvas.width-pSize
+	if(playerX>=canvas.width-pSize+pSize*0.29) {
+		playerX = canvas.width-pSize+pSize*0.29
 		pXvel = -pXvel/1.2
 	}
-	if(playerY>=canvas.height-pSize) {
-		playerY = canvas.height-pSize
+	if(playerY>=canvas.height-pSize+pSize*0.29) {
+		playerY = canvas.height-pSize+pSize*0.29
 		pYvel = -pYvel/1.2
 	}
 	
 	
 	
 	// Set Screen color
-    ctx.fillStyle = '#010101';
+    ctx.fillStyle = '#489fa5';
     // Fill Screen
 	ctx.fillRect(0, 0, canvas.width, canvas.height)
-	ctx.drawImage(playerSprite, 0, 0, imageDim, imageDim, playerX, playerY, pSize, pSize);
+	/*for(let i = 0; i <canvas.width/tileSize; i++) {
+		for(let k = 0; k <canvas.height/tileSize; k++) {
+			ctx.drawImage(tile, 0, 0, tileDim, tileDim, i*tileSize, k*tileSize, tileSize, tileSize)
+		}
+	}*/
+	ctx.globalAlpha = 0.1;
+	ctx.drawImage(noise, 0, 0, 1024, 1024, 0, 0, canvas.width, canvas.height*2);
+	ctx.globalAlpha = 1.0;
+	ctx.drawImage(playerSprite, 0, 0, spriteDim, spriteDim, playerX, playerY, pSize, pSize);
+	ctx.globalAlpha = 0.9;
+	ctx.drawImage(ui, 0, 0, 1024, 512, 0, 0, canvas.width, canvas.height);
+	ctx.globalAlpha = 1.0;
 	setTimeout(loop, 1000/60)
 	
 }
@@ -142,6 +166,12 @@ window.addEventListener('resize',
 		canvas.height = innerHeight
 		pSize = canvas.height/pScale;
 		maxVel = canvas.width/100;
+		tileSize = canvas.height/10;
+		/*for (let i = 0; i <= canvas.height; i+tileSize) {
+			for (let j = 0; j <= canvas.width; j+tileSize) {
+				ctx.drawImage(tile, 0, 0, tileDim, tileDim, j, i, tileSize, tileSize)
+			}
+		}*/
 	})
 	
 window.addEventListener('mousemove', function (event) {
