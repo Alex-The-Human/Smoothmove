@@ -10,7 +10,7 @@ let pXvel = 0;
 let pYvel = 0;
 let friction = 1.045;
 let maxVel = canvas.width/100;
-let pScale = 10
+let pScale = 4
 let pSize = canvas.height/pScale;
 let keys = {
 	w: false,
@@ -28,22 +28,35 @@ let delayedY3 = 0;
 let delayedX4 = 0;
 let delayedY4 = 0;
 
+//animation
+let pFrame = 0;
+let pAnimationspeed = 50;
+
 //player sprite
 var playerSprite = new Image; 
-playerSprite.src = "purpleTankturretScaled.png";
+playerSprite.src = "images/runeSpritescaled.png";
 var spriteDim = 384;
 
 //tile texture
 var tile = new Image; 
-tile.src = "background.Scaled.png";
+tile.src = "images/background.Scaled.png";
 var tileDim = 256;
 var tileSize = canvas.height/10;
 
 var ui = new Image;
-ui.src = "ui.png";
+ui.src = "images/ui.png";
 
 var noise = new Image;
-noise.src = "noise.png";
+noise.src = "images/noise.png";
+
+var currentSprite = new Image;
+currentSprite.src = "images/runeSpritescaled1.png";
+var frame1 = new Image;
+frame1.src = "images/runeSpritescaled1.png";
+var frame2 = new Image;
+frame2.src = "images/runeSpritescaled2.png";
+var frame3 = new Image;
+frame3.src = "images/runeSpritescaled3.png";
 
 function onkey(e, pressed){
 	
@@ -138,20 +151,33 @@ function loop() {
     ctx.fillStyle = '#489fa5';
     // Fill Screen
 	ctx.fillRect(0, 0, canvas.width, canvas.height)
-	/*for(let i = 0; i <canvas.width/tileSize; i++) {
+	for(let i = 0; i <canvas.width/tileSize; i++) {
 		for(let k = 0; k <canvas.height/tileSize; k++) {
 			ctx.drawImage(tile, 0, 0, tileDim, tileDim, i*tileSize, k*tileSize, tileSize, tileSize)
 		}
-	}*/
-	ctx.globalAlpha = 0.1;
-	ctx.drawImage(noise, 0, 0, 1024, 1024, 0, 0, canvas.width, canvas.height*2);
-	ctx.globalAlpha = 1.0;
-	ctx.drawImage(playerSprite, 0, 0, spriteDim, spriteDim, playerX, playerY, pSize, pSize);
+	}
+	//ctx.globalAlpha = 0.1;
+	//ctx.drawImage(noise, 0, 0, 1024, 1024, 0, 0, canvas.width, canvas.height*2);
+	//ctx.globalAlpha = 1.0;
+	ctx.drawImage(currentSprite, 0, 0, spriteDim, spriteDim, playerX, playerY, pSize, pSize);
 	ctx.globalAlpha = 0.9;
 	ctx.drawImage(ui, 0, 0, 1024, 512, 0, 0, canvas.width, canvas.height);
 	ctx.globalAlpha = 1.0;
 	setTimeout(loop, 1000/60)
-	
+	pFrame++
+	if(pFrame >= pAnimationspeed){
+		pFrame = 0
+		currentSprite = frame1;
+	}
+	if(pFrame >= pAnimationspeed*0.3) {
+		currentSprite = frame2;
+	}
+	if(pFrame >= pAnimationspeed*0.5) {
+		currentSprite = frame3;
+	}
+	if(pFrame >= pAnimationspeed*0.8) {
+		currentSprite = frame2;
+	}
 }
 
 // Disable Scroll Bar
